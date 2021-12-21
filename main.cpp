@@ -16,6 +16,7 @@
 #include "Room.h"
 #include "Table.h"
 #include "Ball.h"
+#include "Hole.h"
 
 using namespace std;
 
@@ -114,10 +115,10 @@ void keyboardEventHandler(unsigned char key, int, int) {
         case 86:
             balls[0]->z -= pushStep;
             break;
-            // Escape key
         case 't':
             cerr << balls[0]->x << ' ' << balls[0]->z << '\n';
             break;
+            // Escape key
         case 27:
             cout << "Exiting..." << '\n';
             exit(1);
@@ -176,6 +177,19 @@ void init() {
 
     glMatrixMode(GL_MODELVIEW);
 
+    // Initializing the holes
+    // down leftmost hole
+    holes[0] = new Hole(-10.3, -29.4);
+    // down rightmost hole
+    holes[1] = new Hole(-10.3, -40.3);
+    // down mid-hole
+    holes[2] = new Hole(0, -29.4);
+    // up leftmost hole
+    holes[3] = new Hole(10.3, -29.4);
+    // up rightmost hole
+    holes[4] = new Hole(+10.3, -40.3);
+    // up mid-hole
+    holes[5] = new Hole(0, -40.3);
 
     // Initializing the balls
     // 15
@@ -220,19 +234,15 @@ void init() {
 
 bool onClickEvent;
 
+
 void draw() {
     // Specifying the window color
     glClearColor(0.4f, 0.2f, 0.1f, 0.12);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
-//    glLoadIdentity();
 
     // For camera
     glTranslatef(x, y, z);
-
-//    glRotatef(0.1, 1, 0, 0);
-//    glRotatef(z, 0, 0, 1);
-
 
     // Front left leg
     glTranslatef(-10, 0, -30);
@@ -277,6 +287,20 @@ void draw() {
 
     // Rendering walls, ceiling, and roof
     Room::drawRoom();
+
+    // Drawing holes
+    // down leftmost hole
+    holes[0]->drawHoleCircle();
+    // down rightmost hole
+    holes[1]->drawHoleCircle();
+    // down mid-hole
+    holes[2]->drawHoleCircle();
+    // up leftmost hole
+    holes[3]->drawHoleCircle();
+    // up rightmost hole
+    holes[4]->drawHoleCircle();
+    // up mid-hole
+    holes[5]->drawHoleCircle();
 
     // Drawing balls
     // 15
@@ -328,7 +352,7 @@ void timerCallBack(int) {
     for (auto &ball: balls) {
         // Move every ball that has speed
         // Check every ball hitting a wall, or entering a hole
-        ball->moveBall(), ball->checkTableBorder();
+        ball->moveBall(), ball->checkTableBorder(), ball->checkHole();
 
         // Check for colliding between any two balls
         for (auto &targetBall: balls) {

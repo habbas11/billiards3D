@@ -13,7 +13,7 @@
 #include <mmsystem.h>
 #include <iostream>
 #include <Gl/glut.h>
-//#include "Hole.h"
+#include "Hole.h"
 
 using namespace std;
 
@@ -110,39 +110,39 @@ public:
             speed = 0;
     }
 
-//    // Checking if the ball got inside a hole
-//    void checkHole() {
-//        // Looping throw all the 6 holes
-//        for (auto &hole: holes) {
-//            // Applying the formula of distance between two circles
-//            double distOnX = hole->x - x;
-//            double distOnY = hole->z - z;
-//
-//            // If the two circles touch...
-//            if (((distOnX * distOnX) + (distOnY * distOnY)) <= (ballRadius + holeRadius) * (ballRadius + holeRadius)) {
-//                cout << "====== Ball " << id << " got inside a hole ======" << '\n';
-//                // Playing a sound (Might not work if not running in debug mode)
-//                PlaySound(TEXT("C:\\Users\\User\\CLionProjects\\billiards2D\\falling.wav"), nullptr,
-//                          SND_FILENAME | SND_ASYNC);
-//
-//                // If the white ball
-//                if (id == 0) {
-//                    cout << "====== White Ball got inside a hole ======" << '\n';
-//                    x = hole->x;
-//                    z = hole->z;
-//                    x = 300;
-//                    z = 400;
-//                    speed = 0;
-//                }
-//                    // If not a white ball, get it out of the viewing range, and stop it
-//                else {
-//                    x = -20, z = -20;
-//                    speed = 0;
-//                    --remainingBalls;
-//                }
-//            }
-//        }
-//    }
+    // Checking if the ball got inside a hole
+    void checkHole() {
+        // Looping throw all the 6 holes
+        for (auto &hole: holes) {
+            // Applying the formula of distance between two circles
+            double distOnX = hole->x - x;
+            double distOnY = hole->z - z;
+
+            // If the two circles touch...
+            if (((distOnX * distOnX) + (distOnY * distOnY)) <= (ballRadius + holeRadius) * (ballRadius + holeRadius)) {
+                cout << "====== Ball " << id << " got inside a hole ======" << '\n';
+                // Playing a sound (Might not work if not running in debug mode)
+                PlaySound(TEXT("C:\\Users\\User\\CLionProjects\\billiards2D\\falling.wav"), nullptr,
+                          SND_FILENAME | SND_ASYNC);
+
+                // If the white ball
+                if (id == 0) {
+                    cout << "====== White Ball got inside a hole ======" << '\n';
+                    x = hole->x;
+                    z = hole->z;
+                    x = -1.0;
+                    z = -35.0;
+                    speed = 0;
+                }
+                    // If not a white ball, get it out of the viewing range, and stop it
+                else {
+                    x = -20, z = -20;
+                    speed = 0;
+                    --remainingBalls;
+                }
+            }
+        }
+    }
 
     // Checking if a ball hits any of the table borders, and if so reduce its speed
     void checkTableBorder() {
