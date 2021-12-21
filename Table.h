@@ -70,6 +70,27 @@ public:
         glEnd();
     }
 
+    static void drawSideXBorder() {
+        glColor3ub(173, 90, 23);
+        glBegin(GL_POLYGON);
+        glVertex3f(-12, -4.9, -42);
+        glVertex3f(-12, -4.9, -28);
+        glVertex3f(-12, -4.0, -28);
+        glVertex3f(-12, -4.0, -42);
+        glEnd();
+    }
+
+
+    static void drawSideYBorder() {
+        glColor3ub(173, 90, 23);
+        glBegin(GL_POLYGON);
+        glVertex3f(-12, -4.9, -28);
+        glVertex3f(12, -4.9, -28);
+        glVertex3f(12, -4.0, -28);
+        glVertex3f(-12, -4.0, -28);
+        glEnd();
+    }
+
 
 };
 

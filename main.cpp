@@ -25,7 +25,7 @@ float x = 0;
 float y = 0;
 float z = 0;
 
-const float step = 0.5;
+const float step = .5;
 const float pushStep = 0.2;
 
 
@@ -244,6 +244,7 @@ void draw() {
     // For camera
     glTranslatef(x, y, z);
 
+    // === TABLE LEGS
     // Front left leg
     glTranslatef(-10, 0, -30);
     Table::drawLeg();
@@ -264,23 +265,77 @@ void draw() {
     Table::drawLeg();
     glTranslatef(-10, 0, 40);
 
+    // === TABLE BORDERS
     // Left bottom border
     glTranslatef(-11.5, 0, 0);
     Table::drawSurfaceXBorder();
     glTranslatef(+11.5, 0, 0);
+
+    // Left Up border
+    glTranslatef(-11.5, .9, 0);
+    Table::drawSurfaceXBorder();
+    glTranslatef(+11.5, -.9, 0);
 
     // Right bottom border
     glTranslatef(+11.5, 0, 0);
     Table::drawSurfaceXBorder();
     glTranslatef(-11.5, 0, 0);
 
+    // Right Up border
+    glTranslatef(+11.5, .9, 0);
+    Table::drawSurfaceXBorder();
+    glTranslatef(-11.5, -.9, 0);
+
     // Down bottom border
     Table::drawSurfaceYBorder();
+
+    // Down up border
+    glTranslatef(0, .9, 0);
+    Table::drawSurfaceYBorder();
+    glTranslatef(0, -.9, 0);
 
     // Up bottom border
     glTranslatef(0, 0, -13);
     Table::drawSurfaceYBorder();
     glTranslatef(0, 0, +13);
+
+    // Up up border
+    glTranslatef(0, .9, -13);
+    Table::drawSurfaceYBorder();
+    glTranslatef(0, -.9, +13);
+
+    Table::drawSideYBorder();
+
+    glTranslatef(0, 0, -1);
+    Table::drawSideYBorder();
+    glTranslatef(0, 0, 1);
+
+    glTranslatef(0, 0, -14);
+    Table::drawSideYBorder();
+    glTranslatef(0, 0, 14);
+
+    glTranslatef(0, 0, -13);
+    Table::drawSideYBorder();
+    glTranslatef(0, 0, 13);
+
+    Table::drawSideXBorder();
+
+
+    glTranslatef(1, 0, 0);
+    Table::drawSideXBorder();
+    glTranslatef(-1, 0, 0);
+
+    glTranslatef(+24, 0, 0);
+    Table::drawSideXBorder();
+    glTranslatef(-24, 0, 0);
+
+
+    glTranslatef(+23, 0, 0);
+    Table::drawSideXBorder();
+    glTranslatef(-23, 0, 0);
+
+
+
 
     // Table green playground
     Table::drawTablePlayground();
