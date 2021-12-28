@@ -6,7 +6,6 @@
 #define BILLIARDS3D_BALL_H
 
 
-
 #include <valarray>
 #include <cstdio>
 #include <windows.h>
@@ -20,19 +19,8 @@ using namespace std;
 const GLfloat PI = acos(-1);
 const int HEIGHT = 800;
 const int WIDTH = 1000;
-const double EPS = 1e-18;
 const double ballRadius = 0.4;
-const double gravity = 9.81;
-
-// Lights and mat properties for the spheres
-const GLfloat light_ambient[] = {0.0f, 0.0f, 0.0f, 1.0f};
-const GLfloat light_diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
-const GLfloat light_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
-const GLfloat light_position[] = {2.0f, 1.0f, 5.0f, 0.0f};
-const GLfloat mat_ambient[] = {0.7f, 0.7f, 0.7f, 1.0f};
-const GLfloat mat_diffuse[] = {0.8f, 0.8f, 0.8f, 1.0f};
-const GLfloat mat_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
-const GLfloat high_shininess[] = {100.0f};
+const double gravity = 0.0001;
 
 // The number of balls at the beginning
 int remainingBalls = 16;
@@ -68,33 +56,12 @@ public:
     }
 
     void drawBall() const {
-        // Specifying the lighting properties
-//        glCullFace(GL_BACK);
-//
-//        glEnable(GL_DEPTH_TEST);
-//        glDepthFunc(GL_LESS);
-//
-//        glEnable(GL_LIGHT0);
-//        glEnable(GL_NORMALIZE);
-//        glEnable(GL_COLOR_MATERIAL);
-//        glEnable(GL_LIGHTING);
-////
-//        glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-//        glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-//        glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-//        glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-////
-//        glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-//        glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-//        glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-//        glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
-
         // Giving a specific color for the ball
         glColor3ub((GLubyte) red, (GLubyte) green, (GLubyte) blue);
 
         // Drawing
         glPushMatrix();
-        glTranslated(x, -4.4, z);
+        glTranslated(x, -4.5, z);
         glutSolidSphere(this->radius, 60, 20);
         glPopMatrix();
     }
@@ -103,7 +70,7 @@ public:
     void moveBall() {
         // The ball will be affected by the friction of the table and the gravity
         if (speed > (frictionForce * gravity)) {
-            speed -= frictionForce * gravity;
+            speed -= (frictionForce * gravity);
             x += cos((ballRect * PI) / 180.0) * speed;
             z += sin((ballRect * PI) / 180.0) * speed;
         } else
@@ -136,7 +103,7 @@ public:
                 }
                     // If not a white ball, get it out of the viewing range, and stop it
                 else {
-                    x = -20, z = -20;
+                    x = -22, z = -20;
                     speed = 0;
                     --remainingBalls;
                 }
@@ -229,13 +196,10 @@ public:
             targetBall.ballRect = rect + (atan2(targetBallY, firstBallX) * 180 / PI);
         }
     }
-
 };
 
 // The array of balls we'll use
 Ball *balls[16];
-
-
 
 
 #endif //BILLIARDS3D_BALL_H

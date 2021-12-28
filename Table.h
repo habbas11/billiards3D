@@ -12,6 +12,7 @@ class Table {
 
 public:
     static void drawLeg() {
+        glNormal3f(0,1.2, 0);
         glColor3ub(0, 0, 0);
         glBegin(GL_POLYGON);
         // Front
@@ -43,6 +44,7 @@ public:
     static void drawTablePlayground() {
         glColor3ub(32, 91, 47);
         glBegin(GL_POLYGON);
+        glNormal3f(0, 3, 0);
         glVertex3f(-12, -4.9, -28);
         glVertex3f(12, -4.9, -28);
         glVertex3f(12, -4.9, -42);
@@ -80,7 +82,6 @@ public:
         glEnd();
     }
 
-
     static void drawSideYBorder() {
         glColor3ub(173, 90, 23);
         glBegin(GL_POLYGON);
@@ -90,8 +91,6 @@ public:
         glVertex3f(-12, -4.0, -28);
         glEnd();
     }
-
-
 };
 
 

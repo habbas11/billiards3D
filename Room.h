@@ -7,11 +7,19 @@
 
 
 #include <GL/glut.h>
+#include "Camera.h"
+
 
 class Room {
 
 public:
     static void drawRoom() {
+        if (camera.y <= -2)
+                glNormal3f(0, 0.3, 0);
+        else if (camera.y >= 2)
+            glNormal3f(0, 2, 0);
+        else
+            glNormal3f(0, 1.0, 0);
         // Floor
         glColor3ub(208, 190, 182);
         glBegin(GL_POLYGON);

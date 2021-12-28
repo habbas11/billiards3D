@@ -25,7 +25,7 @@ public:
     void drawHoleCircle() const {
 
         glColor3ub(0, 0, 0);
-        glTranslatef(x, -4.8, z);
+        glTranslatef(x, -4.85, z);
         glBegin(GL_POLYGON);
         for (double i = 0; i <= 360 * 2;) {
             double temp = acos(-1) * i * 2;
@@ -35,7 +35,7 @@ public:
             i++;
         }
         glEnd();
-        glTranslatef(-x, 4.8, -z);
+        glTranslatef(-x, 4.85, -z);
     }
 };
 

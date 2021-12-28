@@ -17,74 +17,70 @@
 #include "Table.h"
 #include "Ball.h"
 #include "Hole.h"
+#include "Camera.h"
 
 using namespace std;
 
-
-float x = 0;
-float y = 0;
-float z = 0;
-
 const float step = .5;
 const float pushStep = 0.2;
-
+bool gameOver = false;
 
 // Handling key presses
 void keyboardEventHandler(unsigned char key, int, int) {
     cout << (int) key << '\n';
-    cout << "x = " << x << ", z = " << y << ", z = " << z << '\n';
+    cout << "Camera x = " << camera.x << ", Camera y = " << camera.y << ", Camera z = " << camera.z << '\n';
     switch (key) {
         // w or W
         case 119:
         case 87:
-            if (y >= -9)
-                y -= step;
+            if (camera.y >= -9)
+                camera.y -= step;
             break;
             // s or S
         case 115:
         case 83:
-            if (y <= 9)
-                y += step;
+            if (camera.y <= 1)
+                camera.y += step;
             break;
             // a or A
         case 97:
         case 65:
-            if ((x + step) < 20)
-                x += step;
+            if ((camera.x + step) < 20)
+                camera.x += step;
             break;
             // d or D
         case 100:
         case 68:
-            if ((x - step) > -20)
-                x -= step;
+            if ((camera.x - step) > -20)
+                camera.x -= step;
             break;
             // q or Q
         case 113:
         case 81:
-            if ((z - step) >= 2)
-                z -= step;
+            if ((camera.z - step) >= 2)
+                camera.z -= step;
             break;
             // e or E
         case 101:
         case 69:
-            if ((z + step) <= 98)
-                z += step;
+            if ((camera.z + step) <= 98)
+                camera.z += step;
             break;
             // 4 num key
         case 52:
-            glRotatef(0.8, 1, 0, 0);
+            glRotatef(-0.8, 0, 1, 0);
             break;
             // 6 num key
         case 54:
-            glRotatef(-0.8, 1, 0, 0);
+            glRotatef(0.8, 0, 1, 0);
             break;
             // 8 num key
         case 56:
-            glRotatef(0.8, 0, 1, 0);
+            glRotatef(-0.8, 1, 0, 0);
             break;
             // 2 num key
         case 50:
-            glRotatef(-0.8, 0, 1, 0);
+            glRotatef(0.8, 1, 0, 0);
             break;
             // Although it is meaningless to rotate around the Z axis
             // 7 num key
@@ -98,12 +94,13 @@ void keyboardEventHandler(unsigned char key, int, int) {
             // z or Z
         case 122:
         case 90:
-            balls[0]->x += pushStep;
+            balls[0]->x -= pushStep;
             break;
             // x or X
         case 120:
         case 88:
-            balls[0]->x -= pushStep;
+            balls[0]->speed += 0.01;
+//            balls[0]->x += pushStep;
             break;
             // c or C
         case 99:
@@ -130,40 +127,39 @@ void keyboardEventHandler(unsigned char key, int, int) {
     glutPostRedisplay();
 }
 
-void mouseEventHandler(int button, int, int, int) {
+void mouseEventHandler(int button, int state, int mouseX, int mouseY) {
+    cerr << state << ' ' << mouseX << ' ' << mouseY << '\n';
     if (button == 3) {
-        if ((z + step) <= 98)
-            z += step;
+        if ((camera.z + step) <= 98)
+            camera.z += step;
     } else if (button == 4) {
-        if ((z - step) >= 2)
-            z -= step;
+        if ((camera.z - step) >= 2)
+            camera.z -= step;
     } else
         cout << button << '\n';
 
     glutPostRedisplay();
 }
 
-
 void special(int key, int, int) {
     if (GLUT_KEY_LEFT == key) {
-        x -= step;
+        camera.x -= step;
         cout << "LEFT" << '\n';
     }
     if (GLUT_KEY_RIGHT == key) {
-        x += step;
+        camera.x += step;
         cout << "RIGHT" << '\n';
     }
     if (GLUT_KEY_UP == key) {
-        z += step;
+        camera.z += step;
         cout << "UP" << '\n';
     }
     if (GLUT_KEY_DOWN == key) {
-        z -= step;
+        camera.z -= step;
         cout << "DOWN" << '\n';
     }
     glutPostRedisplay();
 }
-
 
 void init() {
     // Initializing the Display Mode
@@ -172,10 +168,27 @@ void init() {
     glutInitWindowSize(WIDTH, HEIGHT);
     // Creating the window, with its label
     glutCreateWindow("BCG601 - Billiards 3D");
+    glColorMaterial(GL_FRONT_AND_BACK, GL_EMISSION);
     glLoadIdentity();
     gluPerspective(60, 1.0, 0.1, 100);
-
     glMatrixMode(GL_MODELVIEW);
+
+    // Lighting parameters
+    GLfloat mat_ambdif[] = {10.0, 20.0, 24.0, 1.0};
+    GLfloat mat_specular[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat mat_shininess[] = {00.0};
+    GLfloat light_position[] = {0, 9.0, -20.0, 2.0};
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambdif);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_DEPTH_TEST);
 
     // Initializing the holes
     // down leftmost hole
@@ -232,17 +245,15 @@ void init() {
 
 }
 
-bool onClickEvent;
-
-
 void draw() {
     // Specifying the window color
-    glClearColor(0.4f, 0.2f, 0.1f, 0.12);
+    //208, 125, 100
+    glClearColor(0.1f, 0.1f, 0.1f, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
 
     // For camera
-    glTranslatef(x, y, z);
+    glTranslatef(camera.x, camera.y, camera.z);
 
     // === TABLE LEGS
     // Front left leg
@@ -391,13 +402,11 @@ void draw() {
     // White ball
     balls[0]->drawBall();
 
-
     // For camera
-    glTranslatef(-x, -y, -z);
-
+    glTranslatef(-camera.x, -camera.y, -camera.z);
 
     // Finally, empty all these buffers
-//    glFlush();
+    glFlush();
     glutSwapBuffers();
 }
 
@@ -420,8 +429,9 @@ void timerCallBack(int) {
     }
 
     // The game ends when only the white ball remains
-    if (remainingBalls == 1) {
+    if (remainingBalls == 1 && !gameOver) {
         cout << "GAME OVER" << '\n';
+        gameOver = true;
     }
 
     // Refresh display
@@ -436,6 +446,8 @@ int main(int argc, char **argv) {
     glutInit(&argc, argv);
     // Initializing and drawing our basic objects
     init();
+    glOrtho(-10.0, 10, -20.0, 20, 100.0, 100.0);        // الإحداثيات المطبقة على منفذ العرض إلى 600،600
+
     // For handling camera position on the Z axis
     glutMouseFunc(mouseEventHandler);
     // For handling camera position on the three axis
