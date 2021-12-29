@@ -134,18 +134,18 @@ public:
         }
 
         // Down border
-        if ((x >= -12 && x <= 12) && ((z - ballRadius) >= -29.4)) {
-            cout << "Ball " << id << " touched down left border" << '\n';
+        if ((x >= -12 && x <= 12) && ((z - ballRadius) >= -29.9)) {
+            cout << "Ball " << id << " touched down border" << '\n';
             ballRect = 360 - ballRect;
             if (ballRect < 0)
                 ballRect += 360;
-            z = -29.4 + ballRadius;
+            z = -29.9 + ballRadius;
             speed *= 0.55;
         }
 
         // Up border
         if ((x >= -12 && x <= 12) && ((z - ballRadius) <= -40.2)) {
-            cout << "Ball " << id << " touched down right border" << '\n';
+            cout << "Ball " << id << " touched up border" << '\n';
             ballRect = 360 - ballRect;
             if (ballRect < 0)
                 ballRect += 360;

@@ -27,7 +27,7 @@ bool gameOver = false;
 
 // Handling key presses
 void keyboardEventHandler(unsigned char key, int, int) {
-    cout << (int) key << '\n';
+//    cout << (int) key << '\n';
     cout << "Camera x = " << camera.x << ", Camera y = " << camera.y << ", Camera z = " << camera.z << '\n';
     switch (key) {
         // w or W
@@ -445,9 +445,8 @@ int main(int argc, char **argv) {
     // Initializing the OpenGL Utility Toolkit first
     glutInit(&argc, argv);
     // Initializing and drawing our basic objects
+    glOrtho(-10.0, 10, -20.0, 20, 100.0, 100.0);
     init();
-    glOrtho(-10.0, 10, -20.0, 20, 100.0, 100.0);        // الإحداثيات المطبقة على منفذ العرض إلى 600،600
-
     // For handling camera position on the Z axis
     glutMouseFunc(mouseEventHandler);
     // For handling camera position on the three axis
