@@ -13,6 +13,7 @@
 #include <iostream>
 #include <Gl/glut.h>
 #include "Hole.h"
+#include "Stick.h"
 
 using namespace std;
 
@@ -20,7 +21,7 @@ const GLfloat PI = acos(-1);
 const int HEIGHT = 800;
 const int WIDTH = 1000;
 const double ballRadius = 0.4;
-const double gravity = 0.0001;
+const double gravity = 0.01;
 
 // The number of balls at the beginning
 int remainingBalls = 16;
@@ -51,7 +52,7 @@ public:
         this->speed = 0;
         this->radius = ballRadius;
         // The pool table has a coefficient of friction of 0.005 at any point on the table
-        this->frictionForce = 0.005;
+        this->frictionForce = 0.05;
         this->id = id;
     }
 
@@ -97,8 +98,10 @@ public:
                     cout << "====== White Ball got inside a hole ======" << '\n';
                     x = hole->x;
                     z = hole->z;
-                    x = -1.0;
+                    x = -4.0;
                     z = -35.0;
+                    stick.x2 = -9;
+                    stick.z2 = -35;
                     speed = 0;
                 }
                     // If not a white ball, get it out of the viewing range, and stop it
@@ -196,6 +199,20 @@ public:
             targetBall.ballRect = rect + (atan2(targetBallY, firstBallX) * 180 / PI);
         }
     }
+
+    void hitBall (double givenSpeed) {
+        // Calculating the angle between the two ends of the stick
+        double xDiff = stick.x1 - stick.x2;
+        double yDiff = stick.z1 - stick.z2;
+
+        // Assigning the new straight line of the ball to follow
+        ballRect = atan2(yDiff, xDiff) * (180 / PI);
+
+        // Assigning the new speed of the white ball after being hit by the stick
+        speed = sqrt(pow(xDiff, 2.0) + pow(yDiff, 2.0));
+        speed *= givenSpeed;
+    }
+
 };
 
 // The array of balls we'll use

@@ -1,8 +1,14 @@
 # ninja log v5
 3	296	6615368093435952	build.ninja	71d2384150763e3c
+1	34	0	C:/Users/User/CLionProjects/billiards3D/cmake-build-debug/CMakeFiles/cmake.verify_globs	71ded8997c9ceebc
+526	825	6625661683137700	billiards3D.exe	25e59eaa0075a918
+2	526	6625661680186833	CMakeFiles/billiards3D.dir/main.cpp.obj	ed335df23e7ec7ce
 0	34	0	C:/Users/User/CLionProjects/billiards3D/cmake-build-debug/CMakeFiles/cmake.verify_globs	71ded8997c9ceebc
-1	528	6624663077594867	CMakeFiles/billiards3D.dir/main.cpp.obj	ed335df23e7ec7ce
-529	868	6624663080935619	billiards3D.exe	25e59eaa0075a918
-1	33	0	C:/Users/User/CLionProjects/billiards3D/cmake-build-debug/CMakeFiles/cmake.verify_globs	71ded8997c9ceebc
-1	562	6624664339002523	CMakeFiles/billiards3D.dir/main.cpp.obj	ed335df23e7ec7ce
-563	907	6624664342393296	billiards3D.exe	25e59eaa0075a918
+1	568	6625662043872762	CMakeFiles/billiards3D.dir/main.cpp.obj	ed335df23e7ec7ce
+569	895	6625662047093453	billiards3D.exe	25e59eaa0075a918
+1	32	0	C:/Users/User/CLionProjects/billiards3D/cmake-build-debug/CMakeFiles/cmake.verify_globs	71ded8997c9ceebc
+1	520	6625662507773740	CMakeFiles/billiards3D.dir/main.cpp.obj	ed335df23e7ec7ce
+520	843	6625662510944487	billiards3D.exe	25e59eaa0075a918
+1	31	0	C:/Users/User/CLionProjects/billiards3D/cmake-build-debug/CMakeFiles/cmake.verify_globs	71ded8997c9ceebc
+2	570	6625665574133930	CMakeFiles/billiards3D.dir/main.cpp.obj	ed335df23e7ec7ce
+570	926	6625665577654744	billiards3D.exe	25e59eaa0075a918

@@ -10,7 +10,6 @@
  * */
 
 #include <GL/glut.h>
-#include <cmath>
 #include <iostream>
 #include <vector>
 #include "Room.h"
@@ -18,16 +17,19 @@
 #include "Ball.h"
 #include "Hole.h"
 #include "Camera.h"
+#include "Stick.h"
 
 using namespace std;
 
 const float step = .5;
 const float pushStep = 0.2;
 bool gameOver = false;
+GLfloat tempX;
+GLfloat tempZ;
 
 // Handling key presses
 void keyboardEventHandler(unsigned char key, int, int) {
-//    cout << (int) key << '\n';
+    cout << (int) key << '\n';
     cout << "Camera x = " << camera.x << ", Camera y = " << camera.y << ", Camera z = " << camera.z << '\n';
     switch (key) {
         // w or W
@@ -99,8 +101,7 @@ void keyboardEventHandler(unsigned char key, int, int) {
             // x or X
         case 120:
         case 88:
-            balls[0]->speed += 0.01;
-//            balls[0]->x += pushStep;
+            balls[0]->x += pushStep;
             break;
             // c or C
         case 99:
@@ -112,8 +113,39 @@ void keyboardEventHandler(unsigned char key, int, int) {
         case 86:
             balls[0]->z -= pushStep;
             break;
-        case 't':
-            cerr << balls[0]->x << ' ' << balls[0]->z << '\n';
+            // k or K (rotating the stick counterclockwise)
+        case 107:
+        case 75:
+            tempX = cos(-0.1) * (stick.x2 - stick.x1) - sin(-0.1) * (stick.z2 - stick.z1) + stick.x1;
+            tempZ = sin(-0.1) * (stick.x2 - stick.x1) + cos(-0.1) * (stick.z2 - stick.z1) + stick.z1;
+            stick.x2 = tempX;
+            stick.z2 = tempZ;
+            break;
+            // l or L (rotating the stick clockwise)
+        case 108:
+        case 76:
+            tempX = cos(0.1) * (stick.x2 - stick.x1) - sin(0.1) * (stick.z2 - stick.z1) + stick.x1;
+            tempZ = sin(0.1) * (stick.x2 - stick.x1) + cos(0.1) * (stick.z2 - stick.z1) + stick.z1;
+            stick.x2 = tempX;
+            stick.z2 = tempZ;
+            break;
+            // b or B (hitting the white ball at x0.01 speed)
+        case 98:
+        case 66:
+            if (balls[0]->speed == 0)
+                balls[0]->hitBall(0.01);
+            break;
+            // n or N (hitting the white ball at x0.1 speed)
+        case 110:
+        case 78:
+            if (balls[0]->speed == 0)
+                balls[0]->hitBall(0.1);
+            break;
+            // m or M (hitting the white ball at x0.5 speed)
+        case 109:
+        case 77:
+            if (balls[0]->speed == 0)
+                balls[0]->hitBall(0.5);
             break;
             // Escape key
         case 27:
@@ -241,7 +273,7 @@ void init() {
     // 01
     balls[1] = new Ball(4, -35.0, 251, 199, 54, 0, 1);
     // White ball
-    balls[0] = new Ball(-1, -35.0, 255, 255, 255, 0, 0);
+    balls[0] = new Ball(-4, -35.0, 255, 255, 255, 0, 0);
 
 }
 
@@ -254,6 +286,15 @@ void draw() {
 
     // For camera
     glTranslatef(camera.x, camera.y, camera.z);
+
+    if (balls[0]->speed == 0) {
+        stick.x1 = balls[0]->x;
+        stick.z1 = balls[0]->z;
+        stick.drawStick();
+    } else {
+        stick.x2 = balls[0]->x - 5;
+        stick.z2 = balls[0]->z;
+    }
 
     // === TABLE LEGS
     // Front left leg
@@ -346,10 +387,10 @@ void draw() {
     glTranslatef(-23, 0, 0);
 
 
-
-
     // Table green playground
     Table::drawTablePlayground();
+    Table::drawMidCircle();
+    Table::drawMidLine();
 
     // Rendering walls, ceiling, and roof
     Room::drawRoom();
@@ -430,7 +471,7 @@ void timerCallBack(int) {
 
     // The game ends when only the white ball remains
     if (remainingBalls == 1 && !gameOver) {
-        cout << "GAME OVER" << '\n';
+        cout << " ++++ GAME OVER ++++ " << '\n';
         gameOver = true;
     }
 

@@ -7,7 +7,7 @@
 
 
 #include <GL/glut.h>
-
+#include "Ball.h"
 class Table {
 
 public:
@@ -91,6 +91,28 @@ public:
         glVertex3f(-12, -4.0, -28);
         glEnd();
     }
+
+    static void drawMidCircle() {
+        double radius = 2;
+        // Drawing
+        glColor3f(1.0f, 1.0f, 1.0f);
+        glBegin(GL_POINTS);
+        for (float i = 0.0; i <= PI;) {
+            glVertex3d(-2 + (sin(-i) * radius),-4.85, -35 + (cos(-i) * radius));
+            i += 0.00001;
+        }
+        glEnd();
+    }
+
+    static void drawMidLine() {
+        // Drawing
+        glColor3f(1.0f, 1.0f, 1.0f);
+        glBegin(GL_LINE_STRIP);
+        glVertex3d(-2.0, -4.85, -29.2);
+        glVertex3d(-2.0, -4.85, -42);
+        glEnd();
+    }
+
 };
 
 
