@@ -14,12 +14,6 @@ class Room {
 
 public:
     static void drawRoom() {
-        if (camera.y <= -2)
-                glNormal3f(0, 0.3, 0);
-        else if (camera.y >= 2)
-            glNormal3f(0, 2, 0);
-        else
-            glNormal3f(0, 1.2, 0);
         // Floor
         glColor3ub(208, 190, 182);
         glBegin(GL_POLYGON);
@@ -27,6 +21,16 @@ public:
         glVertex3f(20, -10, 50);
         glVertex3f(20, -10, -100);
         glVertex3f(-20, -10, -100);
+        glEnd();
+
+        // Ceiling
+        glColor3ub(190, 135, 127);
+        glBegin(GL_POLYGON);
+        glNormal3f(0, 1, 0);
+        glVertex3f(-20, 10, 50);
+        glVertex3f(20, 10, 50);
+        glVertex3f(20, 10, -100);
+        glVertex3f(-20, 10, -100);
         glEnd();
 
         // Left wall
@@ -47,15 +51,6 @@ public:
         glVertex3f(20, -10, -100);
         glEnd();
 
-        // Ceiling
-        glColor3ub(190, 135, 127);
-        glBegin(GL_POLYGON);
-        glVertex3f(-20, 10, 50);
-        glVertex3f(20, 10, 50);
-        glVertex3f(20, 10, -100);
-        glVertex3f(-20, 10, -100);
-        glEnd();
-
         // Front wall
         glColor3ub(208, 125, 100);
         glBegin(GL_POLYGON);
@@ -63,6 +58,15 @@ public:
         glVertex3f(20, -10, -100);
         glVertex3f(20, 10, -100);
         glVertex3f(-20, 10, -100);
+        glEnd();
+
+        // Back wall
+        glColor3ub(208, 125, 100);
+        glBegin(GL_POLYGON);
+        glVertex3f(-20, -10, 30);
+        glVertex3f(20, -10, 30);
+        glVertex3f(20, 10, 30);
+        glVertex3f(-20, 10, 30);
         glEnd();
     }
 };

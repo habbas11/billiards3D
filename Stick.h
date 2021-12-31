@@ -7,18 +7,17 @@
 
 
 #include <GL/glut.h>
-//#include "Ball.h"
 
 class Stick {
 
 public:
-    GLfloat x1;
-    GLfloat z1;
-    GLfloat x2;
-    GLfloat z2;
+    float x1;
+    float z1;
+    float x2;
+    float z2;
 
     // The constructor
-    Stick(GLfloat stickX1, GLfloat stickZ1, GLfloat stickX2, GLfloat stickZ2) {
+    Stick(float stickX1, float stickZ1, float stickX2, float stickZ2) {
         this->x1 = stickX1;
         this->z1 = stickZ1;
         this->x2 = stickX2;

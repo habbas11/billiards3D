@@ -21,97 +21,135 @@
 
 using namespace std;
 
+// Actual vector representing the camera's direction
+float lx = 0.0f, lz = -1.0f;
+// XZ position of the camera
+float x = 0.0f, z = -2.0f;
+
+
 const float step = .5;
-const float pushStep = 0.2;
+const float pushStep = .2;
 bool gameOver = false;
 GLfloat tempX;
 GLfloat tempZ;
 
 // Handling key presses
 void keyboardEventHandler(unsigned char key, int, int) {
-    cout << (int) key << '\n';
-    cout << "Camera x = " << camera.x << ", Camera y = " << camera.y << ", Camera z = " << camera.z << '\n';
+    if (!gameOver)
+        cout << "Camera x = " << camera.x << ", Camera y = " << camera.y << ", Camera z = " << camera.z << '\n';
     switch (key) {
         // w or W
+        // Moving up one the Y axis
         case 119:
         case 87:
-            if (camera.y >= -9)
+            if (camera.y >= -8)
                 camera.y -= step;
             break;
             // s or S
+            // Moving down one the Y axis
         case 115:
         case 83:
-            if (camera.y <= 1)
+            if (camera.y <= 9)
                 camera.y += step;
             break;
             // a or A
+            // Moving left one the X axis
         case 97:
         case 65:
             if ((camera.x + step) < 20)
                 camera.x += step;
             break;
             // d or D
+            // Moving right one the X axis
         case 100:
         case 68:
             if ((camera.x - step) > -20)
                 camera.x -= step;
             break;
             // q or Q
+            // Moving back one the Z axis
         case 113:
         case 81:
             if ((camera.z - step) >= 2)
                 camera.z -= step;
             break;
             // e or E
+            // Moving forward one the Z axis
         case 101:
         case 69:
             if ((camera.z + step) <= 98)
                 camera.z += step;
             break;
             // 4 num key
+            // Rotating left around the Y axis
         case 52:
             glRotatef(-0.8, 0, 1, 0);
             break;
             // 6 num key
+            // Rotating right around the Y axis
         case 54:
             glRotatef(0.8, 0, 1, 0);
             break;
             // 8 num key
+            // Rotating around the X axis
         case 56:
             glRotatef(-0.8, 1, 0, 0);
             break;
             // 2 num key
+            // Rotating around the X axis
         case 50:
             glRotatef(0.8, 1, 0, 0);
             break;
             // Although it is meaningless to rotate around the Z axis
             // 7 num key
+            // Rotating around the Z axis
         case 55:
             glRotatef(0.8, 0, 0, 1);
             break;
             // 9 num key
+            // Rotating around the Z axis
         case 57:
             glRotatef(-0.8, 0, 0, 1);
             break;
             // z or Z
+            // Moving the white ball left
         case 122:
         case 90:
-            balls[0]->x -= pushStep;
+            if (balls[0]->speed == 0) {
+                balls[0]->x -= pushStep;
+                stick.x2 = balls[0]->x - 5;
+                stick.z2 = balls[0]->z;
+            }
             break;
             // x or X
+            // Moving the white ball right
         case 120:
         case 88:
-            balls[0]->x += pushStep;
+            if (balls[0]->speed == 0) {
+                balls[0]->x += pushStep;
+                stick.x2 = balls[0]->x - 5;
+                stick.z2 = balls[0]->z;
+            }
             break;
             // c or C
+            // Moving the white ball back
         case 99:
         case 67:
-            balls[0]->z += pushStep;
+            if (balls[0]->speed == 0) {
+                balls[0]->z += pushStep;
+                stick.x2 = balls[0]->x - 5;
+                stick.z2 = balls[0]->z;
+            }
             break;
-            // c or C
+            // v or V
+            // Moving the white ball forward
         case 118:
         case 86:
-            balls[0]->z -= pushStep;
+            if (balls[0]->speed == 0) {
+                balls[0]->z -= pushStep;
+                stick.x2 = balls[0]->x - 5;
+                stick.z2 = balls[0]->z;
+            }
             break;
             // k or K (rotating the stick counterclockwise)
         case 107:
@@ -161,36 +199,69 @@ void keyboardEventHandler(unsigned char key, int, int) {
 
 void mouseEventHandler(int button, int state, int mouseX, int mouseY) {
     cerr << state << ' ' << mouseX << ' ' << mouseY << '\n';
+    // Zooming in
     if (button == 3) {
+        // Limits for zooming
         if ((camera.z + step) <= 98)
             camera.z += step;
-    } else if (button == 4) {
+    }
+        // Zooming out
+    else if (button == 4) {
+        // Limits for zooming
         if ((camera.z - step) >= 2)
             camera.z -= step;
-    } else
-        cout << button << '\n';
+    }
 
     glutPostRedisplay();
 }
 
 void special(int key, int, int) {
+    // Zooming in
+    if (GLUT_KEY_UP == key) {
+        // Limits for zooming
+        if ((camera.z + step) <= 98)
+            camera.z += step;
+    }
+    // Zooming out
+    if (GLUT_KEY_DOWN == key) {
+        // Limits for zooming
+        if ((camera.z - step) >= 2)
+            camera.z -= step;
+    }
     if (GLUT_KEY_LEFT == key) {
-        camera.x -= step;
-        cout << "LEFT" << '\n';
+        if ((camera.x + step) < 20)
+            camera.x += step;
     }
     if (GLUT_KEY_RIGHT == key) {
-        camera.x += step;
-        cout << "RIGHT" << '\n';
-    }
-    if (GLUT_KEY_UP == key) {
-        camera.z += step;
-        cout << "UP" << '\n';
-    }
-    if (GLUT_KEY_DOWN == key) {
-        camera.z -= step;
-        cout << "DOWN" << '\n';
+        if ((camera.x - step) > -20)
+            camera.x -= step;
     }
     glutPostRedisplay();
+}
+
+// Changing the dimensions according to the screen dimensions
+void changeSize(int w, int h) {
+
+    // Prevent a divide by zero, when window is too short
+    // (you cant make a window of zero width).
+    if (h == 0)
+        h = 1;
+    float ratio = w * 1.0 / h;
+
+    // Use the Projection Matrix
+    glMatrixMode(GL_PROJECTION);
+
+    // Reset Matrix
+    glLoadIdentity();
+
+    // Set the viewport to be the entire window
+    glViewport(0, 0, w, h);
+
+    // Set the correct perspective.
+    gluPerspective(45.0f, ratio, 0.1f, 100.0f);
+
+    // Get Back to the Modelview
+    glMatrixMode(GL_MODELVIEW);
 }
 
 void init() {
@@ -201,20 +272,23 @@ void init() {
     // Creating the window, with its label
     glutCreateWindow("BCG601 - Billiards 3D");
     glColorMaterial(GL_FRONT_AND_BACK, GL_EMISSION);
-    glLoadIdentity();
-    gluPerspective(60, 1.0, 0.1, 100);
     glMatrixMode(GL_MODELVIEW);
-
+    // Clear Color and Depth Buffers
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+    gluLookAt(x, 1.0f, z,
+              x + lx, 1.0f, z + lz,
+              0.0f, 1.0f, 0.0f);
     // Lighting parameters
     GLfloat mat_ambdif[] = {10.0, 20.0, 24.0, 1.0};
     GLfloat mat_specular[] = {0.0, 0.0, 0.0, 1.0};
-    GLfloat mat_shininess[] = {00.0};
-    GLfloat light_position[] = {0, 9.0, -20.0, 2.0};
+    GLfloat mat_shininess[] = {80.0};
+    GLfloat light_position0[] = {0, 600.0, -200.0, 12.0};
 
     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambdif);
     glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
     glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position0);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
     glEnable(GL_LIGHTING);
@@ -283,6 +357,7 @@ void draw() {
     glClearColor(0.1f, 0.1f, 0.1f, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
+    glNormal3f(0, 1.2, 0);
 
     // For camera
     glTranslatef(camera.x, camera.y, camera.z);
@@ -486,15 +561,16 @@ int main(int argc, char **argv) {
     // Initializing the OpenGL Utility Toolkit first
     glutInit(&argc, argv);
     // Initializing and drawing our basic objects
-    glOrtho(-10.0, 10, -20.0, 20, 100.0, 100.0);
     init();
-    // For handling camera position on the Z axis
+    // For handling camera position on the Z axis (using the mouse scroll wheel)
     glutMouseFunc(mouseEventHandler);
     // For handling camera position on the three axis
     glutKeyboardFunc(keyboardEventHandler);
+    // For handling camera position on the X and Z axis using arrow keys
     glutSpecialFunc(special);
     // For displaying our view
     glutDisplayFunc(draw);
+    glutReshapeFunc(changeSize);
     // Registering a timer callback to be triggered every 1ms
     glutTimerFunc(1, timerCallBack, 1);
 

@@ -20,8 +20,8 @@ using namespace std;
 const GLfloat PI = acos(-1);
 const int HEIGHT = 800;
 const int WIDTH = 1000;
-const double ballRadius = 0.4;
-const double gravity = 0.01;
+const float ballRadius = 0.4;
+const float gravity = 0.01;
 
 // The number of balls at the beginning
 int remainingBalls = 16;
@@ -33,19 +33,19 @@ public:
     // All the properties that are needed for controlling the balls
 
     // position vector
-    double x, z;
-    double radius;
-    double red, green, blue;
-    double speed;
+    float x, z;
+    float radius;
+    float red, green, blue;
+    float speed;
     // The line which the ball will follow when it has speed
-    double ballRect;
+    float ballRect;
     // The friction force caused by moving on the table
-    double frictionForce;
+    float frictionForce;
     // The number of the ball
     int id;
 
     // The constructor
-    Ball(double x, double z, double red, double green, double blue, double rect, int id) {
+    Ball(float x, float z, float red, float green, float blue, float rect, int id) {
         this->x = x, this->z = z;
         this->red = red;
         this->green = green, this->blue = blue, this->ballRect = rect;
@@ -83,14 +83,14 @@ public:
         // Looping throw all the 6 holes
         for (auto &hole: holes) {
             // Applying the formula of distance between two circles
-            double distOnX = hole->x - x;
-            double distOnY = hole->z - z;
+            float distOnX = hole->x - x;
+            float distOnY = hole->z - z;
 
             // If the two circles touch...
             if (((distOnX * distOnX) + (distOnY * distOnY)) <= (ballRadius + holeRadius) * (ballRadius + holeRadius)) {
                 cout << "====== Ball " << id << " got inside a hole ======" << '\n';
-                // Playing a sound (Might not work if not running in debug mode)
-                PlaySound(TEXT("C:\\Users\\User\\CLionProjects\\billiards2D\\falling.wav"), nullptr,
+                // Playing a sound (Might not work if not running in debug mode with the correct absolute path for the .wav file)
+                PlaySound(TEXT("C:\\Users\\User\\CLionProjects\\billiards3D\\falling.wav"), nullptr,
                           SND_FILENAME | SND_ASYNC);
 
                 // If the white ball
@@ -168,8 +168,8 @@ public:
         if (collide(targetBall)) {
             cout << "Balls " << id << " and " << targetBall.id << " collided." << '\n';
 
-            double dist = sqrt(((x - targetBall.x) * (x - targetBall.x)) + ((z - targetBall.z) * (z - targetBall.z)));
-            double overLap = 0.5 * (dist - (2 * ballRadius));
+            float dist = sqrt(((x - targetBall.x) * (x - targetBall.x)) + ((z - targetBall.z) * (z - targetBall.z)));
+            float overLap = 0.5 * (dist - (2 * ballRadius));
 
             x -= overLap * (x - targetBall.x) / dist;
             z -= overLap * (z - targetBall.z) / dist;
@@ -177,12 +177,12 @@ public:
             targetBall.x += overLap * (x - targetBall.x) / dist;
             targetBall.z += overLap * (z - targetBall.z) / dist;
 
-            double rect = atan2(z - targetBall.z, x - targetBall.x);
+            float rect = atan2(z - targetBall.z, x - targetBall.x);
             rect *= 180;
             rect /= PI;
 
 
-            double firstBallX, firstBallY, targetBallX, targetBallY;
+            float firstBallX, firstBallY, targetBallX, targetBallY;
 
             firstBallX = cos(((ballRect - rect) * PI) / 180.0) * speed;
             firstBallY = sin(((ballRect - rect) * PI) / 180.0) * speed;
@@ -200,10 +200,13 @@ public:
         }
     }
 
-    void hitBall (double givenSpeed) {
+    void hitBall (float givenSpeed) {
+        // Playing a sound (Might not work if not running in debug mode with the correct absolute path for the .wav file)
+        PlaySound(TEXT("C:\\Users\\User\\CLionProjects\\billiards3D\\shot.wav"), nullptr,
+                  SND_FILENAME | SND_ASYNC);
         // Calculating the angle between the two ends of the stick
-        double xDiff = stick.x1 - stick.x2;
-        double yDiff = stick.z1 - stick.z2;
+        float xDiff = stick.x1 - stick.x2;
+        float yDiff = stick.z1 - stick.z2;
 
         // Assigning the new straight line of the ball to follow
         ballRect = atan2(yDiff, xDiff) * (180 / PI);

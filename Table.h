@@ -12,7 +12,6 @@ class Table {
 
 public:
     static void drawLeg() {
-        glNormal3f(0,1.2, 0);
         glColor3ub(0, 0, 0);
         glBegin(GL_POLYGON);
         // Front
@@ -44,7 +43,6 @@ public:
     static void drawTablePlayground() {
         glColor3ub(32, 91, 47);
         glBegin(GL_POLYGON);
-        glNormal3f(0, 3, 0);
         glVertex3f(-12, -4.9, -28);
         glVertex3f(12, -4.9, -28);
         glVertex3f(12, -4.9, -42);
@@ -55,6 +53,7 @@ public:
     static void drawSurfaceXBorder() {
         glColor3ub(173, 90, 23);
         glBegin(GL_POLYGON);
+        glNormal3f(0, 0.9, 0);
         glVertex3f(-0.5, -4.9, -28);
         glVertex3f(0.5, -4.9, -28);
         glVertex3f(0.5, -4.9, -42);
@@ -65,6 +64,8 @@ public:
     static void drawSurfaceYBorder() {
         glColor3ub(173, 90, 23);
         glBegin(GL_POLYGON);
+        glNormal3f(0, 0.9, 0);
+        glNormal3f(1.2, 0.9, 0);
         glVertex3f(-12, -4.9, -28);
         glVertex3f(12, -4.9, -28);
         glVertex3f(12, -4.9, -29);
@@ -75,6 +76,7 @@ public:
     static void drawSideXBorder() {
         glColor3ub(173, 90, 23);
         glBegin(GL_POLYGON);
+        glNormal3f(0.2, 0.9, 0);
         glVertex3f(-12, -4.9, -42);
         glVertex3f(-12, -4.9, -28);
         glVertex3f(-12, -4.0, -28);
@@ -85,6 +87,7 @@ public:
     static void drawSideYBorder() {
         glColor3ub(173, 90, 23);
         glBegin(GL_POLYGON);
+        glNormal3f(1.2, 0.9, 0);
         glVertex3f(-12, -4.9, -28);
         glVertex3f(12, -4.9, -28);
         glVertex3f(12, -4.0, -28);
@@ -93,7 +96,7 @@ public:
     }
 
     static void drawMidCircle() {
-        double radius = 2;
+        float radius = 2;
         // Drawing
         glColor3f(1.0f, 1.0f, 1.0f);
         glBegin(GL_POINTS);

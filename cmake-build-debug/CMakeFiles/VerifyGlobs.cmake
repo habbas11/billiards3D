@@ -5,6 +5,27 @@ cmake_policy(SET CMP0009 NEW)
 # source_files at CMakeLists.txt:8 (file)
 file(GLOB NEW_GLOB LIST_DIRECTORIES true "C:/Users/User/CLionProjects/billiards3D/Shot.wav")
 set(OLD_GLOB
+  "C:/Users/User/CLionProjects/billiards3D/shot.wav"
+  )
+if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
+  message("-- GLOB mismatch!")
+  file(TOUCH_NOCREATE "C:/Users/User/CLionProjects/billiards3D/cmake-build-debug/CMakeFiles/cmake.verify_globs")
+endif()
+
+# source_files at CMakeLists.txt:8 (file)
+file(GLOB NEW_GLOB LIST_DIRECTORIES true "C:/Users/User/CLionProjects/billiards3D/hit.wav")
+set(OLD_GLOB
+  "C:/Users/User/CLionProjects/billiards3D/hit.wav"
+  )
+if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
+  message("-- GLOB mismatch!")
+  file(TOUCH_NOCREATE "C:/Users/User/CLionProjects/billiards3D/cmake-build-debug/CMakeFiles/cmake.verify_globs")
+endif()
+
+# source_files at CMakeLists.txt:8 (file)
+file(GLOB NEW_GLOB LIST_DIRECTORIES true "C:/Users/User/CLionProjects/billiards3D/shot.wav")
+set(OLD_GLOB
+  "C:/Users/User/CLionProjects/billiards3D/shot.wav"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")

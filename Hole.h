@@ -8,16 +8,16 @@
 #include <GL/glut.h>
 #include "Ball.h"
 
-const double holeRadius = 0.5;
+const float holeRadius = 0.5;
 
 class Hole {
 
 public:
-    double x, z;
-    double radius;
+    float x, z;
+    float radius;
 
     // The constructor
-    Hole(double x, double z) {
+    Hole(float x, float z) {
         this->x = x, this->z = z;
         this->radius = holeRadius;
     }
@@ -27,10 +27,10 @@ public:
         glColor3ub(0, 0, 0);
         glTranslatef(x, -4.85, z);
         glBegin(GL_POLYGON);
-        for (double i = 0; i <= 360 * 2;) {
-            double temp = acos(-1) * i * 2;
-            double circleX = cos(temp / 360) * 0.5;
-            double circleZ = sin(temp / 360) * 0.5;
+        for (float i = 0; i <= 360 * 2;) {
+            float temp = (float)acos(-1) * i * 2;
+            float circleX = cos(temp / 360) * 0.5;
+            float circleZ = sin(temp / 360) * 0.5;
             glVertex3d(circleX, 0, circleZ);
             i++;
         }
