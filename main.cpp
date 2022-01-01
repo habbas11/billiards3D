@@ -154,16 +154,16 @@ void keyboardEventHandler(unsigned char key, int, int) {
             // k or K (rotating the stick counterclockwise)
         case 107:
         case 75:
-            tempX = cos(-0.1) * (stick.x2 - stick.x1) - sin(-0.1) * (stick.z2 - stick.z1) + stick.x1;
-            tempZ = sin(-0.1) * (stick.x2 - stick.x1) + cos(-0.1) * (stick.z2 - stick.z1) + stick.z1;
+            tempX = cos(-0.02) * (stick.x2 - stick.x1) - sin(-0.02) * (stick.z2 - stick.z1) + stick.x1;
+            tempZ = sin(-0.02) * (stick.x2 - stick.x1) + cos(-0.02) * (stick.z2 - stick.z1) + stick.z1;
             stick.x2 = tempX;
             stick.z2 = tempZ;
             break;
             // l or L (rotating the stick clockwise)
         case 108:
         case 76:
-            tempX = cos(0.1) * (stick.x2 - stick.x1) - sin(0.1) * (stick.z2 - stick.z1) + stick.x1;
-            tempZ = sin(0.1) * (stick.x2 - stick.x1) + cos(0.1) * (stick.z2 - stick.z1) + stick.z1;
+            tempX = cos(0.02) * (stick.x2 - stick.x1) - sin(0.02) * (stick.z2 - stick.z1) + stick.x1;
+            tempZ = sin(0.02) * (stick.x2 - stick.x1) + cos(0.02) * (stick.z2 - stick.z1) + stick.z1;
             stick.x2 = tempX;
             stick.z2 = tempZ;
             break;
@@ -183,7 +183,7 @@ void keyboardEventHandler(unsigned char key, int, int) {
         case 109:
         case 77:
             if (balls[0]->speed == 0)
-                balls[0]->hitBall(0.5);
+                balls[0]->hitBall(1.5);
             break;
             // Escape key
         case 27:
@@ -198,7 +198,6 @@ void keyboardEventHandler(unsigned char key, int, int) {
 }
 
 void mouseEventHandler(int button, int state, int mouseX, int mouseY) {
-    cerr << state << ' ' << mouseX << ' ' << mouseY << '\n';
     // Zooming in
     if (button == 3) {
         // Limits for zooming
@@ -312,37 +311,37 @@ void init() {
 
     // Initializing the balls
     // 15
-    balls[15] = new Ball(8, -37.5, 18, 135, 57, 0, 15);
+    balls[15] = new Ball(6.8, -37., 18, 135, 57, 0, 15);
     // 14
-    balls[14] = new Ball(8, -36.5, 155, 97, 77, 0, 14);
+    balls[14] = new Ball(6.8, -36.0, 155, 97, 77, 0, 14);
     // 13
-    balls[13] = new Ball(8, -35.0, 244, 122, 66, 0, 13);
+    balls[13] = new Ball(6.8, -35.0, 244, 122, 66, 0, 13);
     // 12
-    balls[12] = new Ball(8, -33.5, 128, 68, 133, 0, 12);
+    balls[12] = new Ball(6.8, -34.0, 128, 68, 133, 0, 12);
     // 11
-    balls[11] = new Ball(8, -32.0, 223, 39, 40, 0, 11);
+    balls[11] = new Ball(6.8, -33.0, 223, 39, 40, 0, 11);
 
 
     // 10
-    balls[10] = new Ball(7, -37.25, 42, 57, 132, 0, 10);
+    balls[10] = new Ball(6.1, -36.5, 42, 57, 132, 0, 10);
     // 09
-    balls[9] = new Ball(7, -35.75, 255, 196, 55, 0, 9);
+    balls[9] = new Ball(6.1, -35.5, 255, 196, 55, 0, 9);
     // 08
-    balls[8] = new Ball(7, -34.25, 4, 159, 72, 0, 8);
+    balls[8] = new Ball(6.1, -34.5, 4, 159, 72, 0, 8);
     // 07
-    balls[7] = new Ball(7, -32.75, 144, 96, 66, 0, 7);
+    balls[7] = new Ball(6.1, -33.5, 144, 96, 66, 0, 7);
 
     // 06
-    balls[6] = new Ball(6, -36.5, 241, 121, 38, 0, 6);
+    balls[6] = new Ball(5.4, -36.0, 241, 121, 38, 0, 6);
     // 05
-    balls[5] = new Ball(6, -35.0, 52, 60, 54, 0, 5);
+    balls[5] = new Ball(5.4, -35.0, 52, 60, 54, 0, 5);
     // 04
-    balls[4] = new Ball(6, -33.5, 139, 73, 133, 0, 4);
+    balls[4] = new Ball(5.4, -34.0, 139, 73, 133, 0, 4);
 
     // 03
-    balls[3] = new Ball(5, -35.75, 241, 32, 53, 0, 3);
+    balls[3] = new Ball(4.7, -35.5, 241, 32, 53, 0, 3);
     // 02
-    balls[2] = new Ball(5, -34.25, 37, 57, 114, 0, 2);
+    balls[2] = new Ball(4.7, -34.5, 37, 57, 114, 0, 2);
 
     // 01
     balls[1] = new Ball(4, -35.0, 251, 199, 54, 0, 1);
