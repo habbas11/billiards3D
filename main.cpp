@@ -183,7 +183,7 @@ void keyboardEventHandler(unsigned char key, int, int) {
         case 109:
         case 77:
             if (balls[0]->speed == 0)
-                balls[0]->hitBall(1.5);
+                balls[0]->hitBall(0.5);
             break;
             // Escape key
         case 27:
@@ -240,9 +240,8 @@ void special(int key, int, int) {
 
 // Changing the dimensions according to the screen dimensions
 void changeSize(int w, int h) {
-
     // Prevent a divide by zero, when window is too short
-    // (you cant make a window of zero width).
+    // (you can't make a window of zero width).
     if (h == 0)
         h = 1;
     float ratio = w * 1.0 / h;
@@ -352,7 +351,6 @@ void init() {
 
 void draw() {
     // Specifying the window color
-    //208, 125, 100
     glClearColor(0.1f, 0.1f, 0.1f, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
