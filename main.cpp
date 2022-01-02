@@ -29,14 +29,12 @@ float x = 0.0f, z = -2.0f;
 
 const float step = .5;
 const float pushStep = .2;
-bool gameOver = false;
 GLfloat tempX;
 GLfloat tempZ;
 
 // Handling key presses
 void keyboardEventHandler(unsigned char key, int, int) {
-    if (!gameOver)
-        cout << "Camera x = " << camera.x << ", Camera y = " << camera.y << ", Camera z = " << camera.z << '\n';
+    cout << "Camera x = " << camera.x << ", Camera y = " << camera.y << ", Camera z = " << camera.z << '\n';
     switch (key) {
         // w or W
         // Moving up one the Y axis
@@ -542,9 +540,10 @@ void timerCallBack(int) {
     }
 
     // The game ends when only the white ball remains
-    if (remainingBalls == 1 && !gameOver) {
+    if (remainingBalls == 1) {
         cout << " ++++ GAME OVER ++++ " << '\n';
-        gameOver = true;
+        cout << "Exiting..." << '\n';
+        exit(1);
     }
 
     // Refresh display
