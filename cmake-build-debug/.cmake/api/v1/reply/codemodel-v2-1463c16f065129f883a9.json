@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/User/CLionProjects/billiards3D/cmake-build-debug",
-		"source" : "C:/Users/User/CLionProjects/billiards3D"
+		"build" : "D:/SVU/Semesters/6th Semester-S21/BCG601 - Computer Graphics/S21 HW/toSubmit/billiards3D/cmake-build-debug",
+		"source" : "D:/SVU/Semesters/6th Semester-S21/BCG601 - Computer Graphics/S21 HW/toSubmit/billiards3D"
 	},
 	"version" : 
 	{

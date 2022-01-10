@@ -1,3 +1,3 @@
-C:/Users/User/CLionProjects/billiards3D/cmake-build-debug/CMakeFiles/billiards3D.dir
-C:/Users/User/CLionProjects/billiards3D/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/User/CLionProjects/billiards3D/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+D:/SVU/Semesters/6th Semester-S21/BCG601 - Computer Graphics/S21 HW/toSubmit/billiards3D/cmake-build-debug/CMakeFiles/billiards3D.dir
+D:/SVU/Semesters/6th Semester-S21/BCG601 - Computer Graphics/S21 HW/toSubmit/billiards3D/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/SVU/Semesters/6th Semester-S21/BCG601 - Computer Graphics/S21 HW/toSubmit/billiards3D/cmake-build-debug/CMakeFiles/rebuild_cache.dir

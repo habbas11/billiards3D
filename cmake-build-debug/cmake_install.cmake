@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/User/CLionProjects/billiards3D
+# Install script for directory: D:/SVU/Semesters/6th Semester-S21/BCG601 - Computer Graphics/S21 HW/toSubmit/billiards3D
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/User/CLionProjects/billiards3D/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/SVU/Semesters/6th Semester-S21/BCG601 - Computer Graphics/S21 HW/toSubmit/billiards3D/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
