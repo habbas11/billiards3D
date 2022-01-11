@@ -1,6 +1,6 @@
 # 3D billiards game using OpenGL & C++ 🎱
 
-You can try the game by checking the .exe file under the Executable folder. 
+You can try the game by checking the .exe file under the <a href = "/Executable">Executable folder.</a> 
 
 ## Here are some snapshots... 😎
 
